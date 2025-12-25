@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:my_sivi_chat/core/routes/route_names.dart';
 
+import '../../home_screen/presentation/screen/home_screen.dart';
 import '../custom_bottom_navigation_bar/custom_bottom_navigation_bar.dart';
 import '../errors/fall_back_error_screen.dart';
 
@@ -36,7 +37,7 @@ class AppRouter {
         pageBuilder: (context, state) => NoTransitionPage(
           key: state.pageKey,
           name: RouteNames.homeScreen,
-          child: const SizedBox(),
+          child: const HomeScreen(),
         ),
       ),
       GoRoute(

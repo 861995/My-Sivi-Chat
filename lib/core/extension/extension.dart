@@ -85,7 +85,7 @@ extension WidgetExtensions on Widget {
       value: const SystemUiOverlayStyle(
         systemNavigationBarColor: AppColors.whiteTxt,
         systemNavigationBarIconBrightness: Brightness.dark,
-        statusBarColor: AppColors.kPrimaryColor,
+        statusBarColor: AppColors.whiteTxt,
       ),
       child: this,
     );
