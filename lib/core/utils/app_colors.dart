@@ -12,4 +12,5 @@ class AppColors {
   static Color snackBarSuccess = const Color(0xFF147F06);
   static Color btmDisable = const Color(0xFF898f9c);
   static Color black = const Color(0xFF000000);
+  static const Color purpleGradiant = Color(0xFF9C27B0);
 }

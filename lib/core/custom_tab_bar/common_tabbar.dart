@@ -17,7 +17,7 @@ class CommonTabBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(4.w),
+      padding: EdgeInsets.all(3.r),
       decoration: BoxDecoration(
         color: AppColors.btmDisable.withValues(alpha: 0.2),
         borderRadius: BorderRadius.circular(100),
@@ -43,7 +43,7 @@ class CommonTabBar extends StatelessWidget {
               return AnimatedContainer(
                 duration: const Duration(milliseconds: 250),
                 curve: Curves.easeInOut,
-                padding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 6.h),
+                padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 4.h),
                 decoration: isSelected
                     ? BoxDecoration(
                         color: AppColors.whiteTxt,
