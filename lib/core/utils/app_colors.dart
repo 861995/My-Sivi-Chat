@@ -13,4 +13,6 @@ class AppColors {
   static Color btmDisable = const Color(0xFF898f9c);
   static Color black = const Color(0xFF000000);
   static const Color purpleGradiant = Color(0xFF9C27B0);
+  static const Color bubbleGreen = Color(0xFF67b868);
+  static const Color bubbleBlue = Color(0xFF006AFF);
 }

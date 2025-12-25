@@ -109,7 +109,7 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
                   children: [
                     //home
                     _buildNavBarItem(
-                      icon: Icons.home,
+                      icon: Icons.chat_bubble_outlined,
                       label: AppConstantString.home,
                       isSelected: currentIndex == 0,
                       onTap: () =>
@@ -117,7 +117,7 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
                     ).withExpanded(),
                     //other
                     _buildNavBarItem(
-                      icon: Icons.tag,
+                      icon: Icons.local_offer_outlined,
                       label: AppConstantString.other,
                       isSelected: currentIndex == 1,
                       onTap: () =>

@@ -13,6 +13,8 @@ class UserMessageCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      splashColor: AppColors.btmDisable.withValues(alpha: 0.3),
+      onTap: () {},
       leading: Stack(
         clipBehavior: Clip.none,
         children: [

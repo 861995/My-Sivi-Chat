@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:my_sivi_chat/core/utils/app_colors.dart';
 
 import '../../../core/custom_tab_bar/common_tabbar.dart';
+import '../../chat_history/presentation/screen/chat_history_screen.dart';
 import '../../user_tab/presentation/screen/user_msg_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -12,7 +13,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen>
-    with SingleTickerProviderStateMixin, AutomaticKeepAliveClientMixin {
+    with SingleTickerProviderStateMixin {
   late final TabController _tabController;
 
   @override
@@ -29,7 +30,6 @@ class _HomeScreenState extends State<HomeScreen>
 
   @override
   Widget build(BuildContext context) {
-    super.build(context);
     return Scaffold(
       backgroundColor: AppColors.whiteTxt,
       body: NestedScrollView(
@@ -51,33 +51,9 @@ class _HomeScreenState extends State<HomeScreen>
         },
         body: TabBarView(
           controller: _tabController,
-          children: const [
-            UserMsgScreen(),
-            _TabList(tabName: 'Tab Two'),
-          ],
+          children: const [UserMsgScreen(), ChatHistoryScreen()],
         ),
       ),
-    );
-  }
-
-  @override
-  // TODO: implement wantKeepAlive
-  bool get wantKeepAlive => true;
-}
-
-class _TabList extends StatelessWidget {
-  final String tabName;
-
-  const _TabList({required this.tabName});
-
-  @override
-  Widget build(BuildContext context) {
-    return ListView.builder(
-      padding: const EdgeInsets.all(12),
-      itemCount: 30,
-      itemBuilder: (context, index) {
-        return Card(child: ListTile(title: Text('$tabName Item ${index + 1}')));
-      },
     );
   }
 }

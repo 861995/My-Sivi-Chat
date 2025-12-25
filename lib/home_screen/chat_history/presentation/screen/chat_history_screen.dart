@@ -3,32 +3,33 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_sivi_chat/core/extension/extension.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
-import '../../domain/entity/user_msg_entity.dart';
-import '../Bloc/bloc/user_msg_bloc.dart';
-import '../Bloc/state/user_msg_state.dart';
-import '../widget/user_message_card.dart';
+import '../../domain/entity/chat_history_entity.dart';
+import '../Bloc/bloc/chat_history_bloc.dart';
+import '../Bloc/state/chat_history_state.dart';
+import '../widget/chat_history_card.dart';
 
-class UserMsgScreen extends StatefulWidget {
-  const UserMsgScreen({super.key});
+class ChatHistoryScreen extends StatefulWidget {
+  const ChatHistoryScreen({super.key});
 
   @override
-  State<UserMsgScreen> createState() => _UserMsgScreenState();
+  State<ChatHistoryScreen> createState() => _ChatHistoryScreenState();
 }
 
-class _UserMsgScreenState extends State<UserMsgScreen>
+class _ChatHistoryScreenState extends State<ChatHistoryScreen>
     with AutomaticKeepAliveClientMixin {
   final ScrollController _scrollController = ScrollController();
+
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return BlocBuilder<UserMsgBloc, UserMsgState>(
+    return BlocBuilder<ChatHistoryBloc, ChatHistoryState>(
       builder: (context, state) {
-        bool isLoading = state is UserMsgLoading;
+        bool isLoading = state is ChatHistoryLoading;
 
-        if (isLoading || state is UserMsgLoaded) {
+        if (isLoading || state is ChatHistoryLoaded) {
           final userMsg = switch (state) {
-            UserMsgLoaded(:final messages) => messages,
-            _ => List.generate(15, (_) => UserMsgEntity.placeHolder()),
+            ChatHistoryLoaded(:final chatHistory) => chatHistory,
+            _ => List.generate(15, (_) => ChatHistoryEntity.placeHolder()),
           };
           return Skeletonizer(
             enabled: isLoading,
@@ -38,13 +39,13 @@ class _UserMsgScreenState extends State<UserMsgScreen>
               itemCount: userMsg.length,
               itemBuilder: (context, index) {
                 final user = userMsg[index];
-                return UserMessageCard(user: user);
+                return ChatHistoryCard(chatHistory: user);
               },
             ),
           );
         }
 
-        if (state is UserMsgError) {
+        if (state is ChatHistoryError) {
           return Text(state.message).center;
         }
 

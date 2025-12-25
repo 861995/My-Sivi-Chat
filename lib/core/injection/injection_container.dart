@@ -1,6 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 
+import '../../home_screen/chat_history/data/data_source/chat_history_local_ds.dart';
+import '../../home_screen/chat_history/data/repo_impl/chat_history_repo_impl.dart';
+import '../../home_screen/chat_history/domain/repository/chat_history_repo.dart';
+import '../../home_screen/chat_history/domain/usecase/chat_history_usecase.dart';
 import '../../home_screen/user_tab/data/data_source/user_msg_local_ds.dart';
 import '../../home_screen/user_tab/data/repo_impl/user_msg_repo_impl.dart';
 import '../../home_screen/user_tab/domain/repository/user_msg_repo.dart';
@@ -13,7 +17,8 @@ final getIt = GetIt.instance;
 void appInitInjection() {
   appCoreInjection();
   apiServiceInjection();
-  otpInjection();
+  userMsgInjection();
+  chatHistoryInjection();
 }
 
 void appCoreInjection() {
@@ -28,7 +33,7 @@ void apiServiceInjection() {
   }
 }
 
-void otpInjection() {
+void userMsgInjection() {
   if (!getIt.isRegistered<UserMsgLocalDataSource>()) {
     getIt.registerLazySingleton<UserMsgLocalDataSource>(
       () => UserMsgLocalDataSource(),
@@ -37,13 +42,35 @@ void otpInjection() {
 
   if (!getIt.isRegistered<UserMsgRepository>()) {
     getIt.registerLazySingleton<UserMsgRepository>(
-      () => AuthRepositoryImpl(dataSource: getIt<UserMsgLocalDataSource>()),
+      () => UserMsgRepositoryImpl(dataSource: getIt<UserMsgLocalDataSource>()),
     );
   }
 
   if (!getIt.isRegistered<GetUserMsgUseCase>()) {
     getIt.registerLazySingleton<GetUserMsgUseCase>(
       () => GetUserMsgUseCase(getIt<UserMsgRepository>()),
+    );
+  }
+}
+
+void chatHistoryInjection() {
+  if (!getIt.isRegistered<ChatHistoryLocalDataSource>()) {
+    getIt.registerLazySingleton<ChatHistoryLocalDataSource>(
+      () => ChatHistoryLocalDataSource(),
+    );
+  }
+
+  if (!getIt.isRegistered<ChatHistoryRepository>()) {
+    getIt.registerLazySingleton<ChatHistoryRepository>(
+      () => ChatHistoryRepositoryImpl(
+        dataSource: getIt<ChatHistoryLocalDataSource>(),
+      ),
+    );
+  }
+
+  if (!getIt.isRegistered<GetChatHistoryUseCase>()) {
+    getIt.registerLazySingleton<GetChatHistoryUseCase>(
+      () => GetChatHistoryUseCase(getIt<ChatHistoryRepository>()),
     );
   }
 }
