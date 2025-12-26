@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:my_sivi_chat/core/extension/extension.dart';
 import 'package:my_sivi_chat/core/routes/route_names.dart';
+import 'package:my_sivi_chat/core/utils/app_strings.dart';
 
 import '../../chat_screen/domain/repository/chat_message_repo.dart';
 import '../../chat_screen/domain/usecase/chat_message_usecase.dart';
@@ -77,7 +79,7 @@ class AppRouter {
           return NoTransitionPage(
             name: RouteNames.otherScreen,
             key: state.pageKey,
-            child: const SizedBox(),
+            child: SizedBox(child: const Text(AppConstantString.other).center),
           );
         },
       ),
@@ -88,7 +90,7 @@ class AppRouter {
         pageBuilder: (context, state) => NoTransitionPage(
           key: state.pageKey,
           name: RouteNames.settingScreen,
-          child: const SizedBox(),
+          child: SizedBox(child: const Text(AppConstantString.setting).center),
         ),
       ),
     ];

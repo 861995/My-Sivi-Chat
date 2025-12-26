@@ -25,7 +25,7 @@ class ChatMessageBubble extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: isSender
             ? MainAxisAlignment.end
             : MainAxisAlignment.start,
@@ -48,14 +48,10 @@ class ChatMessageBubble extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: isSender ? AppColors.bubbleBlue : AppColors.bubbleGrey,
                   borderRadius: BorderRadius.only(
-                    topLeft: const Radius.circular(16),
-                    topRight: const Radius.circular(16),
-                    bottomLeft: isSender
-                        ? const Radius.circular(16)
-                        : Radius.zero,
-                    bottomRight: isSender
-                        ? Radius.zero
-                        : const Radius.circular(16),
+                    topLeft: Radius.circular(isSender ? 16 : 6),
+                    topRight: Radius.circular(isSender ? 6 : 16),
+                    bottomLeft: const Radius.circular(16),
+                    bottomRight: const Radius.circular(16),
                   ),
                 ),
                 child: Text(

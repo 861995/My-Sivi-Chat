@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:my_sivi_chat/core/utils/ui_utills.dart';
 
 import '../../../domain/entity/user_msg_entity.dart';
 import '../../../domain/usecase/user_msg_usecase.dart';
@@ -10,6 +11,7 @@ class UserMsgBloc extends Bloc<UserMsgEvent, UserMsgState> {
 
   UserMsgBloc({required this.userMsgUseCase}) : super(const UserMsgInitial()) {
     on<FetchUserMessages>(_onFetchUserMessages);
+    on<AddUserMsg>(_onAddUser);
   }
 
   Future<void> _onFetchUserMessages(
@@ -25,5 +27,30 @@ class UserMsgBloc extends Bloc<UserMsgEvent, UserMsgState> {
     } catch (e) {
       emit(UserMsgError(e.toString()));
     }
+  }
+
+  void _onAddUser(AddUserMsg event, Emitter<UserMsgState> emit) {
+    if (state is! UserMsgLoaded) return;
+
+    final currentState = state as UserMsgLoaded;
+
+    final bool isAlreadyPresent = currentState.messages.any(
+      (user) => user.userName.toLowerCase() == event.userName.toLowerCase(),
+    );
+    if (isAlreadyPresent) {
+      UiUtility.showToast(message: "User already present, try other name");
+      return;
+    }
+    final updatedList = List<UserMsgEntity>.from(currentState.messages)
+      ..insert(
+        0,
+        UserMsgEntity(
+          userName: event.userName,
+          lastSeen: "online",
+          isOnline: true,
+        ),
+      );
+
+    emit(UserMsgLoaded(updatedList));
   }
 }
