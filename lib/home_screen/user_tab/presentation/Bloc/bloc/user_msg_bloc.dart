@@ -50,6 +50,7 @@ class UserMsgBloc extends Bloc<UserMsgEvent, UserMsgState> {
           isOnline: true,
         ),
       );
+    UiUtility.showToast(message: "User Added Successfully", isSuccess: true);
 
     emit(UserMsgLoaded(updatedList));
   }
