@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:my_sivi_chat/chat_screen/presentation/Cubit/cubit/translation_cubit.dart';
 import 'package:my_sivi_chat/core/extension/extension.dart';
 import 'package:my_sivi_chat/core/utils/app_fonts.dart';
-import 'package:translator/translator.dart';
 
 import '../../../core/utils/app_colors.dart';
 import '../../../home_screen/user_tab/presentation/widget/user_msg_avatar.dart';
@@ -26,8 +27,7 @@ class ChatMessageBubble extends StatefulWidget {
 }
 
 class _ChatMessageBubbleState extends State<ChatMessageBubble> {
-  final GoogleTranslator _translator = GoogleTranslator();
-
+  bool isTranslating = false;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -82,7 +82,11 @@ class _ChatMessageBubbleState extends State<ChatMessageBubble> {
       children: [
         GestureDetector(
           onLongPress: () async {
-            _showTranslatorBottomSheet();
+            if (!isTranslating) {
+              context.read<TranslationCubit>().translateLatinToEnglish(
+                widget.message,
+              );
+            }
           },
           child: Container(
             constraints: const BoxConstraints(maxWidth: 260),
@@ -118,53 +122,6 @@ class _ChatMessageBubbleState extends State<ChatMessageBubble> {
           ),
         ),
       ],
-    );
-  }
-
-  Future<String> translateToEnglish(String text) async {
-    final translation = await _translator.translate(text, from: 'la', to: 'en');
-    return translation.text;
-  }
-
-  void _showTranslatorBottomSheet() {
-    showModalBottomSheet(
-      context: context,
-      backgroundColor: AppColors.whiteTxt,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
-      ),
-      builder: (context) {
-        return FutureBuilder<String>(
-          future: translateToEnglish(widget.message),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return Padding(
-                padding: 24.allPadding,
-                child: const CircularProgressIndicator().center,
-              );
-            }
-
-            if (snapshot.hasError) {
-              return Padding(
-                padding: 24.allPadding,
-                child: const Text("Translation failed"),
-              );
-            }
-
-            return Padding(
-              padding: 24.allPadding,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  12.h.heightBox,
-                  Text(snapshot.data ?? '', style: AppFonts.regular12w500()),
-                ],
-              ),
-            );
-          },
-        );
-      },
     );
   }
 }

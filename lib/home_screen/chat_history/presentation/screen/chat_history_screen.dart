@@ -34,7 +34,7 @@ class _ChatHistoryScreenState extends State<ChatHistoryScreen>
           return Skeletonizer(
             enabled: isLoading,
             child: ListView.builder(
-              // controller: _scrollController,
+              // controller: _controller,
               key: const PageStorageKey('chat_msg_list'),
               padding: EdgeInsetsGeometry.zero,
               itemCount: userMsg.length,
