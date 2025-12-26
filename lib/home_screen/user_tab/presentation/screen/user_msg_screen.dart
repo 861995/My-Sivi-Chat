@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_sivi_chat/core/extension/extension.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
+import '../../../../core/utils/app_colors.dart';
 import '../../domain/entity/user_msg_entity.dart';
 import '../Bloc/bloc/user_msg_bloc.dart';
 import '../Bloc/state/user_msg_state.dart';
@@ -21,35 +22,45 @@ class _UserMsgScreenState extends State<UserMsgScreen>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return BlocBuilder<UserMsgBloc, UserMsgState>(
-      builder: (context, state) {
-        bool isLoading = state is UserMsgLoading;
+    return Scaffold(
+      backgroundColor: AppColors.whiteTxt,
 
-        if (isLoading || state is UserMsgLoaded) {
-          final userMsg = switch (state) {
-            UserMsgLoaded(:final messages) => messages,
-            _ => List.generate(15, (_) => UserMsgEntity.placeHolder()),
-          };
-          return Skeletonizer(
-            enabled: isLoading,
-            child: ListView.builder(
-              controller: _scrollController,
-              padding: EdgeInsetsGeometry.zero,
-              itemCount: userMsg.length,
-              itemBuilder: (context, index) {
-                final user = userMsg[index];
-                return UserMessageCard(user: user);
-              },
-            ),
-          );
-        }
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        shape: const CircleBorder(),
+        backgroundColor: AppColors.bubbleBlue,
+        child: const Icon(Icons.add, size: 28, color: AppColors.whiteTxt),
+      ),
+      body: BlocBuilder<UserMsgBloc, UserMsgState>(
+        builder: (context, state) {
+          bool isLoading = state is UserMsgLoading;
 
-        if (state is UserMsgError) {
-          return Text(state.message).center;
-        }
+          if (isLoading || state is UserMsgLoaded) {
+            final userMsg = switch (state) {
+              UserMsgLoaded(:final messages) => messages,
+              _ => List.generate(15, (_) => UserMsgEntity.placeHolder()),
+            };
+            return Skeletonizer(
+              enabled: isLoading,
+              child: ListView.builder(
+                controller: _scrollController,
+                padding: EdgeInsetsGeometry.zero,
+                itemCount: userMsg.length,
+                itemBuilder: (context, index) {
+                  final user = userMsg[index];
+                  return UserMessageCard(user: user);
+                },
+              ),
+            );
+          }
 
-        return const SizedBox();
-      },
+          if (state is UserMsgError) {
+            return Text(state.message).center;
+          }
+
+          return const SizedBox();
+        },
+      ),
     );
   }
 
