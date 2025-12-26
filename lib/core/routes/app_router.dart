@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:my_sivi_chat/core/extension/extension.dart';
 import 'package:my_sivi_chat/core/routes/route_names.dart';
 import 'package:my_sivi_chat/core/utils/app_strings.dart';
+import 'package:my_sivi_chat/splash_screen/presentation/screen/splash_screen.dart';
 import 'package:translator/translator.dart';
 
 import '../../chat_screen/domain/repository/chat_message_repo.dart';
@@ -27,7 +28,7 @@ class AppRouter {
   AppRouter() {
     router = GoRouter(
       navigatorKey: rootNavKey,
-      initialLocation: RouteNames.homeScreen,
+      initialLocation: RouteNames.splashScreen,
 
       errorBuilder: (_, _) => const FallBackErrorScreen(),
       routes: [
@@ -37,6 +38,17 @@ class AppRouter {
           routes: buildBottomNavScreens(),
         ),
 
+        GoRoute(
+          path: RouteNames.splashScreen,
+          name: RouteNames.splashScreen,
+          pageBuilder: (context, state) {
+            return NoTransitionPage(
+              name: RouteNames.splashScreen,
+              key: state.pageKey,
+              child: const SplashScreen(),
+            );
+          },
+        ),
         GoRoute(
           path: RouteNames.chatScreen,
           name: RouteNames.chatScreen,
