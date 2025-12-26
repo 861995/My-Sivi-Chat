@@ -15,4 +15,6 @@ class AppColors {
   static const Color purpleGradiant = Color(0xFF9C27B0);
   static const Color bubbleGreen = Color(0xFF67b868);
   static const Color bubbleBlue = Color(0xFF006AFF);
+  static const Color bubbleGrey = Color(0xFFD0D4DB);
+  static const Color pinkAvatar = Color(0xFFFF6070);
 }

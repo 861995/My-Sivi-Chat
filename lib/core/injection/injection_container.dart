@@ -1,6 +1,11 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 
+import '../../chat_screen/data/datasource/receiver_remote_ds.dart';
+import '../../chat_screen/data/datasource/sender_local_ds.dart';
+import '../../chat_screen/data/repo_impl/chat_message_repo_impl.dart';
+import '../../chat_screen/domain/repository/chat_message_repo.dart';
+import '../../chat_screen/domain/usecase/chat_message_usecase.dart';
 import '../../home_screen/chat_history/data/data_source/chat_history_local_ds.dart';
 import '../../home_screen/chat_history/data/repo_impl/chat_history_repo_impl.dart';
 import '../../home_screen/chat_history/domain/repository/chat_history_repo.dart';
@@ -19,6 +24,7 @@ void appInitInjection() {
   apiServiceInjection();
   userMsgInjection();
   chatHistoryInjection();
+  chatMessageInjection();
 }
 
 void appCoreInjection() {
@@ -27,8 +33,11 @@ void appCoreInjection() {
 }
 
 void apiServiceInjection() {
-  // Register Dio and ApiService instances for each domain
   if (!getIt.isRegistered<Dio>()) {
+    getIt.registerLazySingleton<Dio>(() => Dio());
+  }
+
+  if (!getIt.isRegistered<ApiService>()) {
     getIt.registerLazySingleton<ApiService>(() => ApiService(getIt<Dio>()));
   }
 }
@@ -71,6 +80,34 @@ void chatHistoryInjection() {
   if (!getIt.isRegistered<GetChatHistoryUseCase>()) {
     getIt.registerLazySingleton<GetChatHistoryUseCase>(
       () => GetChatHistoryUseCase(getIt<ChatHistoryRepository>()),
+    );
+  }
+}
+
+void chatMessageInjection() {
+  if (!getIt.isRegistered<SenderLocalDataSource>()) {
+    getIt.registerLazySingleton<SenderLocalDataSource>(
+      () => SenderLocalDataSource(),
+    );
+  }
+  if (!getIt.isRegistered<ReceiverMsgRemoteDataSource>()) {
+    getIt.registerLazySingleton<ReceiverMsgRemoteDataSource>(
+      () => ReceiverMsgRemoteDataSource(apiService: getIt<ApiService>()),
+    );
+  }
+
+  if (!getIt.isRegistered<ChatMessageRepository>()) {
+    getIt.registerLazySingleton<ChatMessageRepository>(
+      () => ChatMessageRepositoryImpl(
+        senderLocalDs: getIt<SenderLocalDataSource>(),
+        receiverMsgRemoteDataSource: getIt<ReceiverMsgRemoteDataSource>(),
+      ),
+    );
+  }
+
+  if (!getIt.isRegistered<GetChatMessageUseCase>()) {
+    getIt.registerLazySingleton<GetChatMessageUseCase>(
+      () => GetChatMessageUseCase(getIt<ChatMessageRepository>()),
     );
   }
 }
