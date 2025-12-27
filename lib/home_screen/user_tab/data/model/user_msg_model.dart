@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:my_sivi_chat/core/extension/string_extension.dart';
 import 'package:my_sivi_chat/home_screen/user_tab/domain/entity/user_msg_entity.dart';
 part 'user_msg_model.g.dart';
 
@@ -30,7 +31,7 @@ class UserMsgModel {
   UserMsgEntity toEntity() {
     return UserMsgEntity(
       userName: userName,
-      isOnline: lastSeen?.toLowerCase() == "online",
+      isOnline: lastSeen!.isOnline,
       lastSeen: lastSeen ?? '',
     );
   }

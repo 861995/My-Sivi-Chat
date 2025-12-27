@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:my_sivi_chat/core/extension/string_extension.dart';
 import 'package:my_sivi_chat/core/routes/route_names.dart';
 import 'package:my_sivi_chat/core/utils/app_fonts.dart';
 import 'package:my_sivi_chat/home_screen/user_tab/presentation/widget/user_msg_avatar.dart';
@@ -29,7 +30,7 @@ class UserMessageCard extends StatelessWidget {
       ),
 
       subtitle: Text(
-        user.lastSeen,
+        user.lastSeen.toLastSeen(),
         style: AppFonts.regular12w400().copyWith(color: AppColors.btmDisable),
       ),
     );

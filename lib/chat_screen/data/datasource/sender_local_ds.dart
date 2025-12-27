@@ -5,7 +5,7 @@ import '../model/chat_message_model.dart';
 class SenderLocalDataSource {
   Future<List<ChatMessageModel>> fetchSenderMsg() async {
     try {
-      await Future.delayed(const Duration(milliseconds: 900));
+      await Future.delayed(const Duration(milliseconds: 400));
 
       final List<ChatMessageModel> parsedList = _dummyChatMessage.map((json) {
         return ChatMessageModel.fromJson(json);

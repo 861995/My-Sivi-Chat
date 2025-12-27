@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_sivi_chat/core/utils/app_colors.dart';
+import 'package:my_sivi_chat/core/utils/app_strings.dart';
 
 import '../../../core/custom_tab_bar/common_tabbar.dart';
 import '../../chat_history/presentation/screen/chat_history_screen.dart';
@@ -44,7 +45,7 @@ class _HomeScreenState extends State<HomeScreen>
               pinned: false,
               title: CommonTabBar(
                 tabController: _tabController,
-                tabs: ['Users', 'Chat History'],
+                tabs: [AppConstantString.users, AppConstantString.chatHistory],
               ),
             ),
           ];

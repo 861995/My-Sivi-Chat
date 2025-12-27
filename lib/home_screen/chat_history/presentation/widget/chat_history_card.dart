@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:my_sivi_chat/core/extension/extension.dart';
+import 'package:my_sivi_chat/core/extension/string_extension.dart';
 import 'package:my_sivi_chat/core/utils/app_fonts.dart';
 import 'package:my_sivi_chat/home_screen/chat_history/domain/entity/chat_history_entity.dart';
 
@@ -41,7 +42,7 @@ class ChatHistoryCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           Text(
-            chatHistory.lastSeen,
+            chatHistory.lastSeen.toLastSeen(),
             style: AppFonts.regular12w400().copyWith(
               color: AppColors.btmDisable,
             ),
