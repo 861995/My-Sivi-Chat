@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:my_sivi_chat/chat_screen/presentation/Bloc/bloc/chat_msg_bloc.dart';
 import 'package:my_sivi_chat/core/extension/extension.dart';
+import 'package:my_sivi_chat/core/extension/string_extension.dart';
 import 'package:my_sivi_chat/core/utils/app_colors.dart';
 import 'package:my_sivi_chat/core/utils/app_fonts.dart';
 import 'package:skeletonizer/skeletonizer.dart';
@@ -29,10 +30,7 @@ class ChatMessageScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.whiteTxt,
-      appBar: ChatAppBar(
-        userName: name,
-        isOnline: lastSeen.toLowerCase() == 'online',
-      ),
+      appBar: ChatAppBar(userName: name, isOnline: lastSeen.isOnline),
       body: BlocBuilder<ChatMessageBloc, ChatState>(
         builder: (context, state) {
           bool isLoading = state is ChatLoading;

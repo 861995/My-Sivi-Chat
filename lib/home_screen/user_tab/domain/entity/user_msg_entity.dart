@@ -12,7 +12,7 @@ class UserMsgEntity {
     return UserMsgEntity(
       userName: "ram prakash",
       isOnline: false,
-      lastSeen: "2 min away",
+      lastSeen: "2025-12-25 14:29:00",
     );
   }
 }

@@ -13,7 +13,7 @@ class ChatHistoryEntity {
   factory ChatHistoryEntity.placeHolder() {
     return ChatHistoryEntity(
       userName: "ram prakash",
-      lastSeen: "2 min away",
+      lastSeen: "2025-12-25 14:29:00",
       unOpenedMsgCount: 2,
       lastMsg: "hello there?",
     );
