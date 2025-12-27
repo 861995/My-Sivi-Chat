@@ -37,6 +37,16 @@ void main() {
 
       expect(lastSeen.isOnline, false);
     });
+    test('returns false when lastSeen is empty', () {
+      final String lastSeen = "";
+
+      expect(lastSeen.isOnline, false);
+    });
+    test('returns false when lastSeen is random String', () {
+      final String lastSeen = "hai";
+
+      expect(lastSeen.isOnline, false);
+    });
   });
 
   group('StringExtension - toLastSeen', () {
@@ -84,8 +94,13 @@ void main() {
       final DateTime date = DateTime.now().subtract(const Duration(days: 10));
       final String lastSeen = date.toString();
 
-      final String result = lastSeen.toLastSeen();
-      expect(result.contains('${date.year}'), true);
+      expect(lastSeen.toLastSeen(), 'Long time ago');
+    });
+
+    test('returns empty if input is empty', () {
+      final String lastSeen = '';
+
+      expect(lastSeen.toLastSeen(), '');
     });
   });
 }

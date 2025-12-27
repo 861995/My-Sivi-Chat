@@ -46,7 +46,7 @@ class UserMsgBloc extends Bloc<UserMsgEvent, UserMsgState> {
         0,
         UserMsgEntity(
           userName: event.userName,
-          lastSeen: "online",
+          lastSeen: DateTime.now().toString(),
           isOnline: true,
         ),
       );
