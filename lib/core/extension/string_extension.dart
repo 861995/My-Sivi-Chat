@@ -3,10 +3,14 @@ extension StringExtension on String {
   //method to get the initial (eg: ram -> R)
   String get getInitial {
     String value = this;
-
-    String initial = value[0].toUpperCase();
-    return initial;
+    if (value.isNotEmpty) {
+      String initial = value[0].toUpperCase();
+      return initial;
+    }
+    return '';
   }
+
+  //method to get the lastSeen (eg: 2025-12-27 14:26:00 -> 2 min ago|| online || yesterday like that..)
 
   String toLastSeen() {
     final DateTime input = DateTime.parse(this).toLocal();
@@ -67,6 +71,8 @@ extension StringExtension on String {
     ];
     return '${date.day} ${months[date.month - 1]} ${date.year}';
   }
+
+  //method to check user online (eg: 2025-12-27 14:26:00 -> true || false)
 
   bool get isOnline {
     final DateTime lastSeenTime = DateTime.parse(this).toLocal();
