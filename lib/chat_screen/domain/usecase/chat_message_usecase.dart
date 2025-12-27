@@ -1,3 +1,5 @@
+import 'package:dio/dio.dart';
+
 import '../entity/chat_message_entity.dart';
 import '../repository/chat_message_repo.dart';
 
@@ -6,7 +8,7 @@ class GetChatMessageUseCase {
 
   GetChatMessageUseCase(this.repository);
 
-  Future<List<ChatMessageEntity>> fetchChatMessage() {
-    return repository.fetchChatMessage();
+  Future<List<ChatMessageEntity>> fetchChatMessage(CancelToken? cancelToken) {
+    return repository.fetchChatMessage(cancelToken);
   }
 }

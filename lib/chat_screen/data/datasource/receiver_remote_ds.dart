@@ -10,9 +10,14 @@ class ReceiverMsgRemoteDataSource {
 
   ReceiverMsgRemoteDataSource({required this.apiService});
 
-  Future<List<ChatMessageModel>> fetchRecieverMsg() async {
+  Future<List<ChatMessageModel>> fetchRecieverMsg(
+    CancelToken? cancelToken,
+  ) async {
     try {
-      final response = await apiService.get(AppEnv.chatApi);
+      final response = await apiService.get(
+        AppEnv.chatApi,
+        cancelToken: cancelToken,
+      );
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         final List<dynamic> jsonList = response.data as List<dynamic>;

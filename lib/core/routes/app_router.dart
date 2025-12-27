@@ -4,11 +4,14 @@ import 'package:go_router/go_router.dart';
 import 'package:my_sivi_chat/core/extension/extension.dart';
 import 'package:my_sivi_chat/core/routes/route_names.dart';
 import 'package:my_sivi_chat/core/utils/app_strings.dart';
+import 'package:my_sivi_chat/splash_screen/presentation/screen/splash_screen.dart';
+import 'package:translator/translator.dart';
 
 import '../../chat_screen/domain/repository/chat_message_repo.dart';
 import '../../chat_screen/domain/usecase/chat_message_usecase.dart';
 import '../../chat_screen/presentation/Bloc/bloc/chat_msg_bloc.dart';
 import '../../chat_screen/presentation/Bloc/event/chat_msg_event.dart';
+import '../../chat_screen/presentation/Cubit/cubit/translation_cubit.dart';
 import '../../chat_screen/presentation/screen/chat_message_screen.dart';
 import '../../home_screen/presentation/screen/home_screen.dart';
 import '../custom_bottom_navigation_bar/custom_bottom_navigation_bar.dart';
@@ -25,7 +28,7 @@ class AppRouter {
   AppRouter() {
     router = GoRouter(
       navigatorKey: rootNavKey,
-      initialLocation: RouteNames.homeScreen,
+      initialLocation: RouteNames.splashScreen,
 
       errorBuilder: (_, _) => const FallBackErrorScreen(),
       routes: [
@@ -36,6 +39,17 @@ class AppRouter {
         ),
 
         GoRoute(
+          path: RouteNames.splashScreen,
+          name: RouteNames.splashScreen,
+          pageBuilder: (context, state) {
+            return NoTransitionPage(
+              name: RouteNames.splashScreen,
+              key: state.pageKey,
+              child: const SplashScreen(),
+            );
+          },
+        ),
+        GoRoute(
           path: RouteNames.chatScreen,
           name: RouteNames.chatScreen,
           pageBuilder: (context, state) {
@@ -44,12 +58,21 @@ class AppRouter {
             final String lastSeen = params[1] as String;
             return buildPageWithTransition(
               name: RouteNames.chatScreen,
-              child: BlocProvider(
-                create: (context) => ChatMessageBloc(
-                  fetchChatMessageUseCase: GetChatMessageUseCase(
-                    getIt<ChatMessageRepository>(),
+              child: MultiBlocProvider(
+                providers: [
+                  BlocProvider(
+                    create: (_) => TranslationCubit(getIt<GoogleTranslator>()),
+                    child: const HomeScreen(),
                   ),
-                )..add(const FetchChatMessages()),
+                  BlocProvider(
+                    create: (_) => ChatMessageBloc(
+                      fetchChatMessageUseCase: GetChatMessageUseCase(
+                        getIt<ChatMessageRepository>(),
+                      ),
+                    )..add(const FetchChatMessages()),
+                  ),
+                ],
+
                 child: ChatMessageScreen(name: name, lastSeen: lastSeen),
               ),
               transitionType: TransitionType.slideFromRight,

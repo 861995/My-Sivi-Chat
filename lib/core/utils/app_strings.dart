@@ -5,6 +5,9 @@ class AppConstantString {
   static const String home = "Home";
   static const String setting = "Setting";
   static const String other = "Other";
+  static const String users = "Users";
+  static const String chatHistory = "Chat History";
+  static const String appName = "My Sivi Chat";
 
   static String dataParsedSuccessfully(String data) =>
       "✅ Data parsed successfully => $data";

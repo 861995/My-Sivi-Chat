@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
+import 'package:translator/translator.dart';
 
 import '../../chat_screen/data/datasource/receiver_remote_ds.dart';
 import '../../chat_screen/data/datasource/sender_local_ds.dart';
@@ -30,6 +31,9 @@ void appInitInjection() {
 void appCoreInjection() {
   // Register AppRouter
   getIt.registerLazySingleton<AppRouter>(() => AppRouter());
+  if (!getIt.isRegistered<GoogleTranslator>()) {
+    getIt.registerLazySingleton<GoogleTranslator>(() => GoogleTranslator());
+  }
 }
 
 void apiServiceInjection() {

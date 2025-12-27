@@ -1,3 +1,5 @@
+import 'package:dio/dio.dart';
+
 import '../../domain/entity/chat_message_entity.dart';
 import '../../domain/repository/chat_message_repo.dart';
 import '../datasource/receiver_remote_ds.dart';
@@ -13,8 +15,12 @@ class ChatMessageRepositoryImpl implements ChatMessageRepository {
   });
 
   @override
-  Future<List<ChatMessageEntity>> fetchChatMessage() async {
-    final receiverMsg = await receiverMsgRemoteDataSource.fetchRecieverMsg();
+  Future<List<ChatMessageEntity>> fetchChatMessage(
+    CancelToken? cancelToken,
+  ) async {
+    final receiverMsg = await receiverMsgRemoteDataSource.fetchRecieverMsg(
+      cancelToken,
+    );
     final senderData = await senderLocalDs.fetchSenderMsg();
 
     final combinedList = [

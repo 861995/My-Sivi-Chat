@@ -17,7 +17,7 @@ class ChatHistoryScreen extends StatefulWidget {
 
 class _ChatHistoryScreenState extends State<ChatHistoryScreen>
     with AutomaticKeepAliveClientMixin {
-  // final ScrollController _scrollController = ScrollController();
+  // final ScrollController _controller = ScrollController();
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +34,7 @@ class _ChatHistoryScreenState extends State<ChatHistoryScreen>
           return Skeletonizer(
             enabled: isLoading,
             child: ListView.builder(
-              // controller: _scrollController,
+              // controller: _controller,
               key: const PageStorageKey('chat_msg_list'),
               padding: EdgeInsetsGeometry.zero,
               itemCount: userMsg.length,
@@ -56,6 +56,5 @@ class _ChatHistoryScreenState extends State<ChatHistoryScreen>
   }
 
   @override
-  // TODO: implement wantKeepAlive
   bool get wantKeepAlive => true;
 }
